@@ -33,8 +33,8 @@ export class Map {
 
     moveCharacter(location) {
         const character = document.getElementById('character');
-        character.style.left = `${location.x}px`;
-        character.style.top = `${location.y}px`;
+        character.style.left = `${location.x - 25}px`;  // Assuming character width is 50px
+        character.style.top = `${location.y - 25}px`;   // Assuming character height is 50px
         this.game.audioManager.playSoundEffect('footstep_pavement');
     }
 }

@@ -12,6 +12,10 @@ export class UI {
         });
         document.getElementById('settings-button').addEventListener('click', () => this.showSettings());
         document.getElementById('settings-close').addEventListener('click', () => this.hideSettings());
+        document.getElementById('inventory-button').addEventListener('click', () => this.showInventory());
+        document.getElementById('quests-button').addEventListener('click', () => this.showQuests());
+        document.getElementById('reset-score').addEventListener('click', () => this.game.resetScore());
+        document.getElementById('logout-button').addEventListener('click', () => this.game.logout());
         this.initSettings();
     }
 
@@ -20,7 +24,21 @@ export class UI {
     }
 
     updateExp() {
-        document.getElementById('exp-value').textContent = this.game.player.exp;
+        const expValue = document.getElementById('exp-value');
+        const expMax = document.getElementById('exp-max');
+        const expFill = document.getElementById('exp-fill');
+
+        expValue.textContent = this.game.player.exp;
+        expMax.textContent = this.game.player.getNextLevelExp();
+
+        const expPercentage = (this.game.player.exp / this.game.player.getNextLevelExp()) * 100;
+        expFill.style.width = `${expPercentage}%`;
+
+        gsap.to(expFill, {
+            width: `${expPercentage}%`,
+            duration: 0.5,
+            ease: 'power2.out'
+        });
     }
 
     showAct(act) {
@@ -35,6 +53,14 @@ export class UI {
         modal.classList.remove('hidden');
         document.getElementById('complete-act').addEventListener('click', () => this.completeAct(act));
         this.game.audioManager.playSoundEffect('menu_open');
+        document.getElementById('complete-act').addEventListener('click', () => this.completeAct(act));
+
+        gsap.from(modal, {
+            scale: 0.8,
+            opacity: 0,
+            duration: 0.3,
+            ease: 'back.out(1.7)'
+        });
     }
 
     completeAct(act) {
@@ -43,7 +69,18 @@ export class UI {
     }
 
     hideModal() {
-        document.getElementById('modal').classList.add('hidden');
+        const modal = document.getElementById('modal');
+        gsap.to(modal, {
+            scale: 0.8,
+            opacity: 0,
+            duration: 0.3,
+            ease: 'power2.in',
+            onComplete: () => {
+                modal.classList.add('hidden');
+                modal.style.opacity = 1;
+                modal.style.scale = 1;
+            }
+        });
     }
 
     showMessage(message) {
@@ -60,6 +97,16 @@ export class UI {
     hideSettings() {
         document.getElementById('settings').classList.add('hidden');
         this.game.audioManager.playSoundEffect('menu_close');
+    }
+
+    showInventory() {
+        // Implement inventory display logic
+        console.log('Show inventory');
+    }
+
+    showQuests() {
+        // Implement quests display logic
+        console.log('Show quests');
     }
 
     initSettings() {

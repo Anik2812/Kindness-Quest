@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kindness Quest - Sign Up</title>
+    <link rel="stylesheet" href="styles/auth.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+</head>
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="container">
+        <form class="auth-form" id="signup-form">
+            <h1>Sign Up</h1>
+            <div class="input-group">
+                <input type="text" id="username" required>
+                <label for="username">Username</label>
+                <div class="underline"></div>
+            </div>
+            <div class="input-group">
+                <input type="email" id="email" required>
+                <label for="email">Email</label>
+                <div class="underline"></div>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" required>
+                <label for="password">Password</label>
+                <div class="underline"></div>
+            </div>
+            <div class="input-group">
+                <input type="password" id="confirm-password" required>
+                <label for="confirm-password">Confirm Password</label>
+                <div class="underline"></div>
+            </div>
+            <button type="submit" class="glow-button">Sign Up</button>
+            <div class="form-footer">
+                <a href="login.html" class="neon-link">Already have an account? Login</a>
+            </div>
+        </form>
+    </div>
+    <script src="scripts/signup.js"></script>
+</body>
+</html>

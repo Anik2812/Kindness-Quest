@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const audioManager = new AudioManager();
     audioManager.loadAudio();
     audioManager.preloadAudio();
-    const game = new Game(audioManager);
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const game = new Game(audioManager, currentUser);
     game.init();
 });

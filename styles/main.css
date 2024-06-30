@@ -1,8 +1,16 @@
-body, html {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body, html {
     height: 100%;
-    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    background-color: #1a1a2e;
 }
 
 #game-container {
@@ -21,6 +29,7 @@ body, html {
     position: absolute;
     top: 0;
     left: 0;
+    filter: brightness(0.8) saturate(1.2);
 }
 
 #character {
@@ -30,15 +39,75 @@ body, html {
     background-image: url('../assets/images/character.png');
     background-size: contain;
     transition: all 0.5s ease;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
 }
 
 #ui {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 10px;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#player-info {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 15px;
+    border-radius: 10px;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#level, #level-value {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+#exp-bar {
+    width: 200px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
     border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+#exp-fill {
+    height: 100%;
+    background-color: #4CAF50;
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+#exp {
+    font-size: 14px;
+}
+
+#menu-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.menu-button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.menu-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
 }
 
 .location {
@@ -47,11 +116,13 @@ body, html {
     height: 60px;
     background-size: contain;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
 }
 
 .location:hover {
     transform: scale(1.1);
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
 }
 
 #modal, #settings {
@@ -59,10 +130,13 @@ body, html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    color: #fff;
+    z-index: 1000;
 }
 
 .hidden {
@@ -71,11 +145,29 @@ body, html {
 
 button {
     margin: 5px;
-    padding: 5px 10px;
+    padding: 10px 20px;
     cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
 }
 
 input[type="range"] {
     width: 100%;
     margin: 10px 0;
+}
+
+.setting-group {
+    margin-bottom: 15px;
+}
+
+.setting-button {
+    width: 100%;
+    margin-top: 10px;
 }

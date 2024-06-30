@@ -9,12 +9,16 @@ export class Player {
     }
 
     checkLevelUp() {
-        const expNeeded = this.level * 100;
-        if (this.exp >= expNeeded) {
-            this.level++;
-            this.exp -= expNeeded;
+        const requiredExp = this.getNextLevelExp();
+        if (this.exp >= requiredExp) {
+            this.level += 1;
+            this.exp -= requiredExp;
             return true;
         }
         return false;
+    }
+
+    getNextLevelExp() {
+        return this.level * 100; // Example level-up logic
     }
 }

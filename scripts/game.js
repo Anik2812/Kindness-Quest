@@ -4,12 +4,13 @@ import { Player } from './player.js';
 import { UI } from './ui.js';
 
 export class Game {
-    constructor(audioManager) {
+    constructor(audioManager, currentUser) {
         this.audioManager = audioManager;
         this.map = new Map(this);
         this.acts = new Acts();
         this.player = new Player();
         this.ui = new UI(this);
+        this.currentUser = currentUser;
     }
 
     init() {
@@ -17,8 +18,8 @@ export class Game {
         this.map.init();
         this.ui.init();
         this.loadGame();
-        this.createStartMusicButton();
         console.log('Game initialization complete');
+        this.createStartMusicButton();
     }
 
     createStartMusicButton() {
@@ -49,21 +50,24 @@ export class Game {
     }
 
     loadGame() {
-        const savedGame = localStorage.getItem('kindnessQuest');
-        if (savedGame) {
-            const gameData = JSON.parse(savedGame);
-            this.player.level = gameData.level;
-            this.player.exp = gameData.exp;
+        if (this.currentUser) {
+            this.player.level = this.currentUser.level;
+            this.player.exp = this.currentUser.exp;
             this.ui.updateLevel();
             this.ui.updateExp();
         }
     }
 
     saveGame() {
-        const gameData = {
-            level: this.player.level,
-            exp: this.player.exp
-        };
-        localStorage.setItem('kindnessQuest', JSON.stringify(gameData));
+        if (this.currentUser) {
+            this.currentUser.level = this.player.level;
+            this.currentUser.exp = this.player.exp;
+            localStorage.setItem(this.currentUser.username, JSON.stringify(this.currentUser));
+        }
+    }
+
+    logout() {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'login.html';
     }
 }
