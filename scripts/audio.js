@@ -1,4 +1,3 @@
-// audio.js
 export class AudioManager {
     constructor() {
         this.musicTracks = {};
@@ -17,7 +16,7 @@ export class AudioManager {
             'level_up_fanfare', 'daily_challenge_theme'
         ];
         musicTracks.forEach(track => {
-            this.musicTracks[track] = new Audio(`assets/audio/music/${track}.mp3`);
+            this.musicTracks[track] = new Audio(`audio/music/${track}.mp3`);
             this.musicTracks[track].loop = true;
         });
 
@@ -30,7 +29,7 @@ export class AudioManager {
             'new_area_unlock', 'outfit_change', 'hair_change', 'accessory_change'
         ];
         soundEffects.forEach(effect => {
-            this.soundEffects[effect] = new Audio(`assets/audio/sfx/${effect}.mp3`);
+            this.soundEffects[effect] = new Audio(`audio/music/sfx/${effect}.mp3`);
         });
     }
 
@@ -71,10 +70,13 @@ export class AudioManager {
     }
 
     playSoundEffect(effect) {
-        if (!this.isMuted) {
-            const sound = this.soundEffects[effect].cloneNode();
-            sound.volume = this.sfxVolume;
-            sound.play().catch(e => console.error('Error playing sound effect:', e));
+        const sound = this.soundEffects[effect];
+        if (sound && !this.isMuted) {
+            const clonedSound = sound.cloneNode();
+            clonedSound.volume = this.sfxVolume;
+            clonedSound.play().catch(e => console.error('Error playing sound effect:', e));
+        } else {
+            console.error(`Sound effect "${effect}" not found.`);
         }
     }
 

@@ -20,6 +20,7 @@ export class Map {
             locationElement.style.backgroundImage = `url('assets/images/locations/${location.name.toLowerCase().replace(' ', '_')}.png')`;
             locationElement.addEventListener('click', () => this.locationClicked(location));
             mapElement.appendChild(locationElement);
+            console.log(`Created location: ${location.name} at (${location.x}, ${location.y})`);
         });
     }
 
