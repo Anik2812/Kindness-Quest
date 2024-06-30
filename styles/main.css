@@ -74,6 +74,7 @@ body, html {
     border-radius: 5px;
     overflow: hidden;
     margin-bottom: 5px;
+    color: #ffffff;
 }
 
 #exp-fill {
@@ -81,11 +82,11 @@ body, html {
     background-color: #4CAF50;
     width: 0%;
     transition: width 0.5s ease;
-    color: #ffffff;
 }
 
 #exp {
     font-size: 14px;
+    color: #ffffff;
 }
 
 #menu-buttons {
