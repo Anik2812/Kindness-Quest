@@ -81,6 +81,7 @@ body, html {
     background-color: #4CAF50;
     width: 0%;
     transition: width 0.5s ease;
+    color: #ffffff;
 }
 
 #exp {
