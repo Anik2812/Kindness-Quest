@@ -38,6 +38,7 @@ export class Game {
     }
 
     completeAct(act) {
+        console.log('Completing act in game:', act);
         this.player.gainExp(act.exp);
         this.ui.updateExp();
         this.saveGame();

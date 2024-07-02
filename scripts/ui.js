@@ -134,10 +134,39 @@ export class UI {
             });
         }
     }
-
-    // Add the showAct method
-    showAct() {
-        // Implementation of showAct
-        console.log('showAct method called');
-    }
+        showAct(act) {
+            console.log('Showing act:', act);
+            const modal = document.getElementById('modal');
+            const content = document.getElementById('modal-content');
+            if (!modal || !content) {
+                console.error('Modal elements not found');
+                return;
+            }
+            content.innerHTML = `
+                <h2>New Act of Kindness</h2>
+                <p>${act.description}</p>
+                <p>EXP: ${act.exp}</p>
+                <button id="complete-act">Complete Act</button>
+            `;
+            modal.classList.remove('hidden');
+            const completeButton = document.getElementById('complete-act');
+            if (completeButton) {
+                completeButton.addEventListener('click', () => this.completeAct(act));
+            }
+            this.game.audioManager.playSoundEffect('menu_open');
+        }
+    
+        completeAct(act) {
+            console.log('Completing act:', act);
+            this.game.completeAct(act);
+            this.hideModal();
+        }
+    
+        hideModal() {
+            const modal = document.getElementById('modal');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+    
 }

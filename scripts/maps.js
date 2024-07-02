@@ -20,11 +20,11 @@ export class Map {
             locationElement.style.backgroundImage = `url('assets/images/locations/${location.name.toLowerCase().replace(' ', '_')}.png')`;
             locationElement.addEventListener('click', () => this.locationClicked(location));
             mapElement.appendChild(locationElement);
-            console.log(`Created location: ${location.name} at (${location.x}, ${location.y})`);
         });
     }
 
     locationClicked(location) {
+        console.log(`Location clicked: ${location.name}`);
         const act = this.game.acts.generateAct(location.name, this.game.player.level);
         this.game.ui.showAct(act);
         this.moveCharacter(location);
@@ -33,8 +33,10 @@ export class Map {
 
     moveCharacter(location) {
         const character = document.getElementById('character');
-        character.style.left = `${location.x - 25}px`;  // Assuming character width is 50px
-        character.style.top = `${location.y - 25}px`;   // Assuming character height is 50px
-        this.game.audioManager.playSoundEffect('footstep_pavement');
+        if (character) {
+            character.style.left = `${location.x - 25}px`;
+            character.style.top = `${location.y - 25}px`;
+            this.game.audioManager.playSoundEffect('footstep_pavement');
+        }
     }
 }

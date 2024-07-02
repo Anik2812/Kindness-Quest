@@ -25,7 +25,12 @@ export class Acts {
     }
 
     generateAct(location, playerLevel) {
+        console.log(`Generating act for ${location}, player level: ${playerLevel}`);
         const locationActs = this.acts[location];
+        if (!locationActs) {
+            console.error(`No acts found for location: ${location}`);
+            return null;
+        }
         const act = locationActs[Math.floor(Math.random() * locationActs.length)];
         act.exp = Math.floor(act.exp * (1 + (playerLevel - 1) * 0.1));
         return act;
