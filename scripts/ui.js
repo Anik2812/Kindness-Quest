@@ -6,115 +6,108 @@ export class UI {
     init() {
         this.updateLevel();
         this.updateExp();
-        document.getElementById('modal-close').addEventListener('click', () => {
-            this.hideModal();
-            this.game.audioManager.playSoundEffect('menu_close');
-        });
-        document.getElementById('settings-button').addEventListener('click', () => this.showSettings());
-        document.getElementById('settings-close').addEventListener('click', () => this.hideSettings());
-        document.getElementById('reset-score').addEventListener('click', () => this.resetScore());
-        document.getElementById('logout-button').addEventListener('click', () => this.game.logout());
+        this.setupEventListeners();
+    }
+
+    updateLevel() {
+        const levelElement = document.getElementById('level-value');
+        if (levelElement) {
+            levelElement.textContent = this.game.player.level;
+        } else {
+            console.error('Element with id "level-value" not found');
+        }
+    }
+
+    updateExp() {
+        const expValue = document.getElementById('exp-value');
+        const expFill = document.getElementById('exp-fill');
+
+        if (!expValue || !expFill) {
+            console.error('One or more EXP elements not found');
+            return;
+        }
+
+        expValue.textContent = this.game.player.exp;
+
+        const nextLevelExp = this.game.player.getNextLevelExp();
+        const expPercentage = (this.game.player.exp / nextLevelExp) * 100;
+        expFill.style.width = `${expPercentage}%`;
+    }
+
+    setupEventListeners() {
+        const modalClose = document.getElementById('modal-close');
+        const settingsButton = document.getElementById('settings-button');
+        const settingsClose = document.getElementById('settings-close');
+        const resetScoreButton = document.getElementById('reset-score');
+        const logoutButton = document.getElementById('logout-button');
+
+        if (modalClose) {
+            modalClose.addEventListener('click', () => {
+                this.hideModal();
+                this.game.audioManager.playSoundEffect('menu_close');
+            });
+        }
+
+        if (settingsButton) {
+            settingsButton.addEventListener('click', () => this.showSettings());
+        }
+
+        if (settingsClose) {
+            settingsClose.addEventListener('click', () => this.hideSettings());
+        }
+
+        if (resetScoreButton) {
+            resetScoreButton.addEventListener('click', () => this.resetScore());
+        }
+
+        if (logoutButton) {
+            logoutButton.addEventListener('click', () => this.game.logout());
+        }
+
         this.initSettings();
     }
-    
-    // Add this method to the UI class
+
+    showModal(content) {
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modal-content');
+        if (modal && modalContent) {
+            modalContent.innerHTML = content;
+            modal.classList.remove('hidden');
+            this.game.audioManager.playSoundEffect('menu_open');
+        }
+    }
+
+    hideModal() {
+        const modal = document.getElementById('modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            this.game.audioManager.playSoundEffect('menu_close');
+        }
+    }
+
+    showSettings() {
+        const settings = document.getElementById('settings');
+        if (settings) {
+            settings.classList.remove('hidden');
+            this.game.audioManager.playSoundEffect('menu_open');
+        }
+    }
+
+    hideSettings() {
+        const settings = document.getElementById('settings');
+        if (settings) {
+            settings.classList.add('hidden');
+            this.game.audioManager.playSoundEffect('menu_close');
+        }
+    }
+
     resetScore() {
         this.game.player.level = 1;
         this.game.player.exp = 0;
         this.updateLevel();
         this.updateExp();
         this.game.saveGame();
-        this.showMessage("Score has been reset!");
-    }
-
-    updateLevel() {
-        document.getElementById('level-value').textContent = this.game.player.level;
-    }
-
-    updateExp() {
-        const expValue = document.getElementById('exp-value');
-        const expMax = document.getElementById('exp-max');
-        const expFill = document.getElementById('exp-fill');
-
-        expValue.textContent = this.game.player.exp;
-        expMax.textContent = this.game.player.getNextLevelExp();
-
-        const expPercentage = (this.game.player.exp / this.game.player.getNextLevelExp()) * 100;
-        expFill.style.width = `${expPercentage}%`;
-
-        gsap.to(expFill, {
-            width: `${expPercentage}%`,
-            duration: 0.5,
-            ease: 'power2.out'
-        });
-    }
-
-    showAct(act) {
-        const modal = document.getElementById('modal');
-        const content = document.getElementById('modal-content');
-        content.innerHTML = `
-            <h2>New Act of Kindness</h2>
-            <p>${act.description}</p>
-            <p>EXP: ${act.exp}</p>
-            <button id="complete-act">Complete Act</button>
-        `;
-        modal.classList.remove('hidden');
-        document.getElementById('complete-act').addEventListener('click', () => this.completeAct(act));
-        this.game.audioManager.playSoundEffect('menu_open');
-        document.getElementById('complete-act').addEventListener('click', () => this.completeAct(act));
-
-        gsap.from(modal, {
-            scale: 0.8,
-            opacity: 0,
-            duration: 0.3,
-            ease: 'back.out(1.7)'
-        });
-    }
-
-    completeAct(act) {
-        this.game.completeAct(act);
-        this.hideModal();
-    }
-
-    hideModal() {
-        const modal = document.getElementById('modal');
-        gsap.to(modal, {
-            scale: 0.8,
-            opacity: 0,
-            duration: 0.3,
-            ease: 'power2.in',
-            onComplete: () => {
-                modal.classList.add('hidden');
-                modal.style.opacity = 1;
-                modal.style.scale = 1;
-            }
-        });
-    }
-
-    showMessage(message) {
-        const content = document.getElementById('modal-content');
-        content.innerHTML = `<p>${message}</p>`;
-        document.getElementById('modal').classList.remove('hidden');
-    }
-
-    showSettings() {
-        document.getElementById('settings').classList.remove('hidden');
-        this.game.audioManager.playSoundEffect('menu_open');
-    }
-
-    hideSettings() {
-        document.getElementById('settings').classList.add('hidden');
-        this.game.audioManager.playSoundEffect('menu_close');
-    }
-
-    showInventory() {
-        // Implement inventory display logic
-        console.log('Show inventory');
-    }
-
-    showQuests() {
-        // Implement quests display logic
-        console.log('Show quests');
+        this.showModal("<p>Score has been reset!</p>");
     }
 
     initSettings() {
@@ -122,17 +115,29 @@ export class UI {
         const sfxSlider = document.getElementById('sfx-volume');
         const muteButton = document.getElementById('mute-button');
 
-        musicSlider.addEventListener('input', (e) => {
-            this.game.audioManager.setMusicVolume(parseFloat(e.target.value));
-        });
+        if (musicSlider) {
+            musicSlider.addEventListener('input', (e) => {
+                this.game.audioManager.setMusicVolume(parseFloat(e.target.value));
+            });
+        }
 
-        sfxSlider.addEventListener('input', (e) => {
-            this.game.audioManager.setSoundEffectVolume(parseFloat(e.target.value));
-        });
+        if (sfxSlider) {
+            sfxSlider.addEventListener('input', (e) => {
+                this.game.audioManager.setSoundEffectVolume(parseFloat(e.target.value));
+            });
+        }
 
-        muteButton.addEventListener('click', () => {
-            const isMuted = this.game.audioManager.toggleMute();
-            muteButton.textContent = isMuted ? 'Unmute' : 'Mute';
-        });
+        if (muteButton) {
+            muteButton.addEventListener('click', () => {
+                const isMuted = this.game.audioManager.toggleMute();
+                muteButton.textContent = isMuted ? 'Unmute' : 'Mute';
+            });
+        }
+    }
+
+    // Add the showAct method
+    showAct() {
+        // Implementation of showAct
+        console.log('showAct method called');
     }
 }

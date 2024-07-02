@@ -1,7 +1,7 @@
 export class Player {
-    constructor() {
-        this.level = 1;
-        this.exp = 0;
+    constructor(level = 1, exp = 0) {
+        this.level = level;
+        this.exp = exp;
     }
 
     gainExp(amount) {

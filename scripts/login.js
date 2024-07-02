@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     const inputGroups = document.querySelectorAll('.input-group');
 
-    gsap.from(loginForm, {duration: 1, y: 50, opacity: 0, ease: 'power3.out'});
+    gsap.from(loginForm, { duration: 1, y: 50, opacity: 0, ease: 'power3.out' });
 
     inputGroups.forEach((group, index) => {
         gsap.from(group, {
@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    loginForm.addEventListener('submit', function(e) {
+    // In login.js
+    loginForm.addEventListener('submit', function (e) {
         e.preventDefault();
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             opacity: 0,
             ease: 'power2.in',
             onComplete: () => {
-                localStorage.setItem('currentUser', JSON.stringify({username, level: 1, exp: 0}));
+                localStorage.setItem('currentUser', JSON.stringify({ username, level: 1, exp: 0 }));
                 window.location.href = 'index.html';
             }
         });

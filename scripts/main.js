@@ -7,9 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const audioManager = new AudioManager();
         audioManager.loadAudio();
         audioManager.preloadAudio();
-        const game = new Game(audioManager, currentUser);
-        game.init();
+        
+        // Delay game initialization slightly to ensure DOM is ready
+        setTimeout(() => {
+            const game = new Game(audioManager, currentUser);
+            game.init();
+        }, 100);
     } else {
-        window.location.href = 'index.html'; // Redirect to login page if not logged in
+        window.location.href = 'login.html';
     }
 });

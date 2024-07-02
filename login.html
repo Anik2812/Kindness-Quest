@@ -32,6 +32,25 @@
             </div>
         </form>
     </div>
-    <script src="scripts/login.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('login-form');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+        
+                // Simple validation
+                if (username && password) {
+                    localStorage.setItem('currentUser', JSON.stringify({username, level: 1, exp: 0}));
+                    alert('Login successful!');
+                    window.location.href = 'index.html';
+                } else {
+                    alert('Please enter both username and password.');
+                }
+            });
+        });
+        </script>
 </body>
 </html>

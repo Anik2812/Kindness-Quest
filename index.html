@@ -5,22 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kindness Quest</title>
     <link rel="stylesheet" href="styles/main.css">
-</head>
-<body>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (!currentUser) {
-                window.location.href = 'login.html'; // Redirect to login page if not logged in
+                window.location.href = 'login.html';
             }
         });
     </script>
+</head>
+<body>
+    <script>
+        window.addEventListener('load', function() {
+            if (!localStorage.getItem('currentUser')) {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+
     <div id="game-container">
         <div id="map"></div>
         <div id="character"></div>
         <div id="ui">
             <div id="level">Level: <span id="level-value">1</span></div>
-            <div id="exp" style="color: white;">EXP: <span id="exp-value">0</span></div>
+            <div id="exp-fill" style="color: white;">EXP: <span id="exp-value">0</span></div>
             <div id="current-act"></div>
             <button id="settings-button">Settings</button>
             <button id="reset-score">Reset Score</button>

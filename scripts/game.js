@@ -8,7 +8,7 @@ export class Game {
         this.audioManager = audioManager;
         this.map = new Map(this);
         this.acts = new Acts();
-        this.player = new Player();
+        this.player = new Player(currentUser.level, currentUser.exp);
         this.ui = new UI(this);
         this.currentUser = currentUser;
     }
@@ -18,8 +18,8 @@ export class Game {
         this.map.init();
         this.ui.init();
         this.loadGame();
-        console.log('Game initialization complete');
         this.createStartMusicButton();
+        console.log('Game initialization complete');
     }
 
     createStartMusicButton() {
@@ -28,12 +28,12 @@ export class Game {
         button.style.position = 'fixed';
         button.style.top = '10px';
         button.style.left = '10px';
-        button.style.zIndex = 1000; // Ensure it's on top of other elements
+        button.style.zIndex = 1000;
         document.body.appendChild(button);
-
+    
         button.addEventListener('click', () => {
             this.audioManager.playMusic('main_theme');
-            button.remove(); // Remove the button after clicking
+            button.remove();
         });
     }
 
@@ -68,6 +68,6 @@ export class Game {
 
     logout() {
         localStorage.removeItem('currentUser');
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
     }
 }
