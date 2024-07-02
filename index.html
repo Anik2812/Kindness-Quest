@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = 'login.html'; // Redirect to login page if not logged in
+            }
+        });
+    </script>
     <div id="game-container">
         <div id="map"></div>
         <div id="character"></div>

@@ -34,18 +34,15 @@ export class AudioManager {
     }
 
     playMusic(track) {
-        this.fadeOutMusic();
-        setTimeout(() => {
-            if (this.currentMusic) {
-                this.currentMusic.pause();
-                this.currentMusic.currentTime = 0;
-            }
-            this.currentMusic = this.musicTracks[track];
-            if (!this.isMuted) {
-                this.currentMusic.volume = this.musicVolume;
-                this.currentMusic.play().catch(e => console.error('Error playing music:', e));
-            }
-        }, 1000); // Wait for fade out
+        if (this.currentMusic) {
+            this.currentMusic.pause();
+            this.currentMusic.currentTime = 0;
+        }
+        this.currentMusic = this.musicTracks[track];
+        if (!this.isMuted) {
+            this.currentMusic.volume = this.musicVolume;
+            this.currentMusic.play().catch(e => console.error('Error playing music:', e));
+        }
     }
 
     fadeOutMusic() {

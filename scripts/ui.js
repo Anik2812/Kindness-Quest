@@ -12,11 +12,19 @@ export class UI {
         });
         document.getElementById('settings-button').addEventListener('click', () => this.showSettings());
         document.getElementById('settings-close').addEventListener('click', () => this.hideSettings());
-        document.getElementById('inventory-button').addEventListener('click', () => this.showInventory());
-        document.getElementById('quests-button').addEventListener('click', () => this.showQuests());
-        document.getElementById('reset-score').addEventListener('click', () => this.game.resetScore());
+        document.getElementById('reset-score').addEventListener('click', () => this.resetScore());
         document.getElementById('logout-button').addEventListener('click', () => this.game.logout());
         this.initSettings();
+    }
+    
+    // Add this method to the UI class
+    resetScore() {
+        this.game.player.level = 1;
+        this.game.player.exp = 0;
+        this.updateLevel();
+        this.updateExp();
+        this.game.saveGame();
+        this.showMessage("Score has been reset!");
     }
 
     updateLevel() {
